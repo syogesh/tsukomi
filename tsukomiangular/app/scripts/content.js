@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var url = $(location).attr('href');
+    /*var url = $(location).attr('href');
     url = url.replace("http://","");
     url = url.replace("https://","");
     console.log(url);
@@ -11,11 +11,7 @@ $(document).ready(function() {
         success: function(data) {
             console.log(data);
         }
-    });
-	
-    function submitClicked() {
-
-    }
+    });*/
 
 	$("body").click(function(e) {
 
@@ -31,10 +27,10 @@ $(document).ready(function() {
     	}));    
 
     	$('.placeddiv').after().html('<form role="form" ng-submit="addPost(newPost.text)" class="tsukform">' + 
-            '<input class="tsukomi form-control" type="text" name="textbox" ng-model="newPost.text" autofocus />' + 
-    		'<div id="addbtn" class="col-sm-2"><button id="add" type="submit" class="btn btn-default form-control" ng-disabled="isEmpty(newPost.text)">add</button></div>');
+            '<input class="form-control" type="text" name="textbox" ng-model="newPost.text" autofocus />' + 
+    		'<input id="add" type="submit" class="btn btn-default form-control" ng-disabled="isEmpty(newPost.text)" /></form>');
         
-        $('.placeddiv').keypress(function (e) {
+        /*$('.placeddiv').keypress(function (e) {
   			if (e.which == 13) {
   				console.log($('input').val());
     			$('#add').submit(function() {
@@ -43,7 +39,7 @@ $(document).ready(function() {
     			console.log('accessing');
     			return false;    //<---- Add this line
   			}
-		});
+		});*/
 		$(this).unbind('click');
 	});
 

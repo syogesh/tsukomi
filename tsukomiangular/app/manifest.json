@@ -24,13 +24,15 @@
       ],
       "js": [
         "bower_components/angular/angular.min.js",
-        "scripts/contentscript.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": false
+        "scripts/jquery.js",
+        "scripts/contentscript.js",
+        "scripts/content.js"
+      ]
+      //"run_at": "document_end",
+      //"all_frames": false
     }
   ],
-  "content_security_policy": "script-src 'self'; object-src 'self'",
+ // "content_security_policy": "script-src 'self'; object-src 'self'",
 "web_accessible_resources": [
   "bower_components/angular/*"
 ],

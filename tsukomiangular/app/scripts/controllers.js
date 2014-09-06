@@ -1,11 +1,10 @@
-angular.module("tsukApp.controllers", []).controller("postCtrl", function($scope, taskService) {
-	$scope.tasks = taskService.get();
-	$scope.newTask = { };
-	
-	$scope.currentPage = 0;
-	$scope.pageSize = 10;
+angular.module("tsukApp.controllers", []).controller("postCtrl", function($scope) {
+	$scope.texts = [];
+	$scope.newPost = { };
+	console.log("tasks controller");
 
 	$scope.isEmpty = function(str) {
+		console.log(_.isBlank(str))
 		return _.isBlank(str);
 	};
 
@@ -13,11 +12,11 @@ angular.module("tsukApp.controllers", []).controller("postCtrl", function($scope
 		console.log("adding post");
 		console.log(m);
 		if (m.length > 0) {
-			$scope.tasks.push({
+			$scope.texts.push({
 				text: m
 			});
 		};	
-		$scope.newTask.text = "";
+		$scope.newPost.text = "";
 		console.log("succeeded post");
 	};
 
