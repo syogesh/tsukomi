@@ -14,39 +14,60 @@ var port = 8080;
 var mongodb_port = 27017;
 
 // mongodb setup
-var uri = "mongodb://localhost:" + mongodb_port + "/tdb";
-
+var mongoUri = "mongodb://localhost:" + mongodb_port + "/tdb";
 
 // router setup
 var router = express.Router();
 
-router.route("/comment")
+
+router.route("/comments/:url/:id?")
 	.put(function(req, res) {
-		var url = req.body.url;
-		var text = req.body.text;
-		var xPos = req.body.xPos;
-		var yPos = req.body.yPos;
-		// save to mongodb
+		var urlIn = req.params.url;
+		var textIn = req.body.text;
+		var xPosIn = req.body.xPos;
+		var yPosIn = req.body.yPos;
+
+		if (urlIn == null || textIn == null
+			|| xPosIn == null || yPosIn == null) {
+
+			res.status(400).send("missing a parameter");
+			return;
+		}
+
+		var newDocument = {
+			text: textIn,
+			position: [xPosIn, yPosIn],
+			votes: 0,
+			url: urlIn,
+			replies: []
+		};
+
 		// check for failures
+		mongodb.MongoClient.connect(mongoUri, function(err, db) {
+			db.collection("comments").insert(newDocument, function(err, result) {});
+		});
+
+		res.send("hello");
 	})
 	.get(function(req, res) {
 		// gets all comments from mongodb
 		// return json of all comments
-		mongodb.MongoClient.connect(uri, function(err, db) {
-			db.collection('websites').find({}).toArray(function (err, items) {
-				res.json(items);
-			});
+		var urlIn = req.params.url;
+		console.log(req.params);
+		db.collection("comments").find({ url: urlIn }).toArray(function (err, items) {
+
+			res.json(items);
 		});
 	})
 	.post(function(req, res) {
 		var url = req.body.url;
 		var id = req.body.id;
 		var vote = req.body.vote; // int
-		// save to mongodb
+		
 	});
 
 
-router.route("replies")
+router.route("/replies/:url/:commentId/:id?")
 	.put(function(req, res) {
 
 	})
