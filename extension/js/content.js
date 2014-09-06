@@ -13,12 +13,16 @@ $(document).ready(function() {
         	top: relY,
     	}));    
 
-    	$('.placeddiv').after().html('<input class="tsukomi" type="text" name="textbox' + '" value="">');
+    	$('.placeddiv').after().html('<form class="tsukform"><input class="tsukomi" type="text" name="textbox' + '" value="">' + 
+    		'<input type="submit" style="display: none;"></form>');
 
     	$('.placeddiv').keypress(function (e) {
   			if (e.which == 13) {
-    			$('.tsukomi').submit();
-    			console.log('acc');
+  				console.log($('input').val());
+    			$('form').submit(function() {
+    				console.log('submitted');
+    			});
+    			console.log('accessing');
     			return false;    //<---- Add this line
   			}
 		});
