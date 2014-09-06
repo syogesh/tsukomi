@@ -27,6 +27,10 @@ router.route("/comments/:url/:id?")
         var xPosIn = req.body.xPos;
         var yPosIn = req.body.yPos;
 
+        console.log(urlIn);
+        console.log(textIn);
+        console.log(xPosIn);
+        console.log(yPosIn);
         if (urlIn == null || textIn == null
             || xPosIn == null || yPosIn == null) {
 
@@ -73,7 +77,7 @@ router.route("/replies/:url/:commentId/:id?")
         var parent_id = req.params.commentId;
         var text = req.body.text;
 
-        mongodb.MongoClient.connect(uri, function(err, db) {
+        mongodb.MongoClient.connect(mongoUri, function(err, db) {
             db.collection('comments').update({ "_id": ObjectID(parent_id) }, 
                                              { $push: { replies: { id: Date.now(), text: text, votes: 1 } } },
                                              function(err, result) {});
@@ -85,8 +89,8 @@ router.route("/replies/:url/:commentId/:id?")
         var parent_id = req.params.commentId;
         var reply_id = req.params.id;
 
-        mongodb.MongoClient.connect(uri, function(err, db) {
-            db.collection('replies').find({ "_id": ObjectID(parent_id) }).toArray(function (err, items) {
+        mongodb.MongoClient.connect(mongoUri, function(err, db) {
+            db.collection('comments').find({ "_id": ObjectID(parent_id) }).toArray(function (err, items) {
                 var replies = items[0]['replies'];
                 res.send(replies);
             });
@@ -97,7 +101,7 @@ router.route("/replies/:url/:commentId/:id?")
         var reply_id = req.params.id;
         var voteIn = req.body.voteIn;
 
-        mongodb.MongoClient.connect(uri, function(err, db) {
+        mongodb.MongoClient.connect(mongoUri, function(err, db) {
             db.collection("comments").find({ "_id": ObjectID(parent_id) }).toArray(function(err, items) {
                 var item = items[0];
                 for (var i = 0; i < item["replies"].length; ++i) {
@@ -129,7 +133,7 @@ app.listen(port);
 console.log("Starting server on port " + port);
 
 /*
-        mongodb.MongoClient.connect(uri, function(err, db) {
+        mongodb.MongoClient.connect(mongoUri, function(err, db) {
             db.collection("websites").find({ "_id": ObjectID(parent_id) }).toArray(function(err, items) {
                 var item = items[0];
                 console.log(items[0]);
