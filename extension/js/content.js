@@ -1,11 +1,8 @@
 $(document).ready(function() {
-	console.log("accessed");
 	var url = $(location).attr('href');
     url = url.replace("http://","");
     url = url.replace("https://","");
-
     url = "google.com";
-    console.log(url);
     $.ajax({
         contentType: 'application/json',
         type: "GET",
@@ -22,13 +19,6 @@ $(document).ready(function() {
             	});
     			$(id).after().html('<div class="comment" style="left:' + 
     				data[i]['position'][0] + 'px; top:' + data[i]['position'][1] + 'px; position:absolute;">' + data[i]['text'] + '</div>');
-    			//$(id).after().html(data[i]['text']);
-    			/*$(id).addClass('comment').css({
-            		left: data[i]['position'][0],
-            		top: data[i]['position'][1],
-            		});*/
-    			//count = count + 1;
-            //});
         	};
         }
     });
@@ -70,6 +60,7 @@ $(document).ready(function() {
   					}
   				});
   				//$('#t0').val('save');
+  				//$('#tsuk-' + count).removeClass('placeddiv').addClass('comment');
     			return false;    //<---- Add this line
   			}
 		});
