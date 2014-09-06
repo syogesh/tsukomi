@@ -12,16 +12,24 @@ $(document).ready(function() {
         dataType: "json",
         url: "http://localhost:8080/api/comments/" + url + "/",
         success: function(data) {
-            data.forEach(function(item) {
-            	console.log(item['text']);
-            	console.log(item['position']);
-            	console.log(item['votes']);
-            	$("body").append($('<div/>').addClass('comment').css({
-        			left: item['position'][0],
-        			top: item['position'][1],
-    			})); 
-    			$('.comment').after().html(item['text']);
-            });
+        	//var count = 0;
+        	for (var i = 0; i < data.length; i++) {
+            //data.forEach(function(item) {
+            	var id = "#tc" + i;
+            	$("body").append($('<div id="tc' + i + '"/>')).css({
+            		left: data[i]['position'][0],
+            		top: data[i]['position'][1]
+            	});
+    			$(id).after().html('<div class="comment" style="left:' + 
+    				data[i]['position'][0] + 'px; top:' + data[i]['position'][1] + 'px; position:absolute;">' + data[i]['text'] + '</div>');
+    			//$(id).after().html(data[i]['text']);
+    			/*$(id).addClass('comment').css({
+            		left: data[i]['position'][0],
+            		top: data[i]['position'][1],
+            		});*/
+    			//count = count + 1;
+            //});
+        	};
         }
     });
 
@@ -61,7 +69,7 @@ $(document).ready(function() {
     					console.log(e);
   					}
   				});
-  				$('#t0').val('save');
+  				//$('#t0').val('save');
     			return false;    //<---- Add this line
   			}
 		});
