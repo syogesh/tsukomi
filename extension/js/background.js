@@ -6,10 +6,12 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
   // No tabs or host permissions needed!
   chrome.tabs.executeScript(null, {file: "js/jquery.js"}, function() {
-  	chrome.tabs.executeScript(null, {
-  		//code: 'console.log("hi")'
-    	file: "js/content.js"
+  	chrome.tabs.executeScript(null, {file: "js/content.js"
   	});
+  });
+
+  chrome.tabs.insertCSS(null, {
+  	code: ".placeddiv{background-color: transparent; height: 100px; width: 100px; position: absolute; z-index: 999;}"
   });
 });
 
