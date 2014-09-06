@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+
+  "name": "Tsukomi",
+  "description": "Testing.",
+  "version": "1.0",
+  "icons": {
+    "16":"owl2.png",
+    "48": "owl.png",
+    "128":"ghost.png"
+  },
+  "browser_action": {
+    "default_title": "Tsukomi Ext"
+    //"default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {"matches": ["http://*/*"], 
+      "js": ["libs/jquery/dist/jquery.js",
+            "libs/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js",
+            "libs/angular/angular.min.js",
+            "libs/lodash/dist/lodash.min.js",
+            "libs/underscore.string/dist/underscore.string.min.js",
+            "js/content.js"],
+       "css": ["libs/bootstrap/dist/css/bootstrap.min.css",
+              "libs/font-awesome/css/font-awesome.min.css"]
+    }
+  ],
+  "permissions": ["http://*/*", "tabs", "https://*/*", "activeTab"],
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  }
+
+}
