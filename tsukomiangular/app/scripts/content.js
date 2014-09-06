@@ -1,7 +1,8 @@
 $(document).ready(function() {
-    var url = $(location).attr('href');
-    url = url.replace("http://","");
-    url = url.replace("https://","");
+    // var url = $(location).attr('href');
+    // url = url.replace("http://","");
+    // url = url.replace("https://","");
+    url = "google.com";
     console.log(url);
     $.ajax({
         contentType: 'application/json',
@@ -30,7 +31,7 @@ $(document).ready(function() {
         	top: relY,
     	}));    
 
-    	$('.placeddiv').after().html('<form role="form" ng-submit="addPost(newPost.text)" class="tsukform">' + 
+    	$('.placeddiv').after().html('<form role="form" onclick="addPost(newPost.text)" class="tsukform">' + 
             '<input class="tsukomi form-control" type="text" name="textbox" ng-model="newPost.text" autofocus />' + 
     		'<div id="addbtn" class="col-sm-2"><button id="add" type="submit" class="btn btn-default form-control" ng-disabled="isEmpty(newPost.text)">add</button></div>');
         

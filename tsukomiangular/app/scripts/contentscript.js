@@ -3,7 +3,8 @@ window.addEventListener("load", function() {
   var app = angular.module('tsukApp', [
   	'tsukApp.controllers',
   	'tsukApp.services',
-  	'xeditable']);
+  	'xeditable',
+    'ngRoute']);
 
   var html = document.querySelector('html');
   html.setAttribute('ng-app', 'tsukApp');

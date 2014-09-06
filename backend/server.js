@@ -22,6 +22,8 @@ var router = express.Router();
 
 router.route("/comments/:url/:id?")
 	.put(function(req, res) {
+		// usage: siteurl/comments/url
+		// will create new comment with text and x y position
 		var urlIn = req.params.url;
 		var textIn = req.body.text;
 		var xPosIn = req.body.xPos;
@@ -50,9 +52,10 @@ router.route("/comments/:url/:id?")
 			db.collection("comments").insert(newDocument, function(err, result) {});
 		});
 
-		res.send("hello");
+		res.send("success");
 	})
 	.get(function(req, res) {
+		// usage: siteurl/comments/url
 		// gets all comments from mongodb
 		// return json of all comments
 		var urlIn = req.params.url;
@@ -64,6 +67,8 @@ router.route("/comments/:url/:id?")
 		});
 	})
 	.post(function(req, res) {
+		// usage: siteurl/comments/url/id
+		// updates a message with <id> by adding or subtracting a vote
 		var urlIn = req.params.url;
 		var idIn = req.body.id;
 		var voteIn = req.body.vote;
@@ -93,38 +98,53 @@ router.route("/comments/:url/:id?")
 
 router.route("/replies/:url/:commentId/:id?")
 	.put(function(req, res) {
-		var parent_id = req.params.commentId;
+		var parentId = req.params.commentId;
 		var text = req.body.text;
 
+		if (parentId == null || text == null) {
+			res.status(400).send("missing a parameter");
+			return;
+		}
+
 		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection('comments').update({ "_id": ObjectID(parent_id) }, 
+			db.collection('comments').update({ "_id": ObjectID(parentId) }, 
 											 { $push: { replies: { id: Date.now(), text: text, votes: 1 } } },
 											 function(err, result) {});
 		});
 
-		res.send("replies put done");
+		res.send("success");
 	})
 	.get(function(req, res) {
-		var parent_id = req.params.commentId;
-		var reply_id = req.params.id;
+		var parentId = req.params.commentId;
+		var replyId = req.params.id;
+
+		if (parentId == null || replyId == null) {
+			res.status(400).send("missing a parameter");
+			return;
+		}
 
 		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection('comments').find({ "_id": ObjectID(parent_id) }).toArray(function (err, items) {
+			db.collection('comments').find({ "_id": ObjectID(parentId) }).toArray(function (err, items) {
 				var replies = items[0]['replies'];
 				res.send(replies);
 			});
 		});
 	})
 	.post(function(req, res) {
-		var parent_id = req.params.commentId;
-		var reply_id = req.params.id;
+		var parentId = req.params.commentId;
+		var replyId = req.params.id;
 		var voteIn = req.body.voteIn;
 
+		if (parentId == null || replyId == null || voteIn == null) {
+			res.status(400).send("missing a parameter");
+			return;
+		}
+
 		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection("comments").find({ "_id": ObjectID(parent_id) }).toArray(function(err, items) {
+			db.collection("comments").find({ "_id": ObjectID(parentId) }).toArray(function(err, items) {
 				var item = items[0];
 				for (var i = 0; i < item["replies"].length; ++i) {
-					if (item['replies'][i]['id'] == reply_id) {
+					if (item['replies'][i]['id'] == replyId) {
 						item['replies'][i]['votes'] = parseInt(item['replies'][i]['votes']) + parseInt(voteIn);
 						var updateDocument = {
 							text: item.text,
@@ -136,11 +156,11 @@ router.route("/replies/:url/:commentId/:id?")
 						break;
 					}
 				}
-				db.collection('comments').update({ "_id": ObjectID(parent_id) }, updateDocument, function(err, result) {});
+				db.collection('comments').update({ "_id": ObjectID(parentId) }, updateDocument, function(err, result) {});
 			});
 		});
 
-		res.send("replies post done");
+		res.send("success");
 	});
 
 // all of our routes will be prefixed with /api
@@ -151,26 +171,3 @@ app.use("/api", router);
 app.listen(port);
 console.log("Starting server on port " + port);
 
-/*
-		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection("websites").find({ "_id": ObjectID(parent_id) }).toArray(function(err, items) {
-				var item = items[0];
-				console.log(items[0]);
-				for (var i = 0; i < item.comments.length; ++i) {
-					if (item['comments'][i]['id'] == reply_id) {
-						item['comments'][i]['upvotes'] = parseInt(item['comments'][i]['upvotes']) + parseInt(voteIn);
-						console.log("votes: " + item['comments'][i]['upvotes']);
-						var updateDocument = {
-							text: item.text,
-							position: item.position,
-							upvotes: item.upvotes,
-							url: item.url,
-							comments: item.comments
-						}
-						break;
-					}
-				}
-				db.collection('websites').update({ "_id": ObjectID(parent_id) }, updateDocument, function(err, result) {});
-			});
-		});
-		*/
