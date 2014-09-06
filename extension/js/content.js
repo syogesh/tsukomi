@@ -1,14 +1,15 @@
 $(document).ready(function() {
-	var url = $(location).attr('href');
-    url = url.replace("http://","");
-    url = url.replace("https://","");
-    url = "google.com";
+	// var url = $(location).attr('href');
+ //    url = url.replace("http://","");
+ //    url = url.replace("https://","");
+ //    url = "google.com";
     $.ajax({
         contentType: 'application/json',
         type: "GET",
         dataType: "json",
-        url: "http://localhost:8080/api/comments/" + url + "/",
+        url: "http://localhost:8080/api/comments/?url=" + document.URL,
         success: function(data) {
+          console.log(data);
         	//var count = 0;
         	for (var i = 0; i < data.length; i++) {
             //data.forEach(function(item) {
@@ -47,11 +48,11 @@ $(document).ready(function() {
 
     	$('input').keypress(function (e) {
   			if (e.which == 13) {
-  				var comment = {'text': $(this).val(), 'xPos': relX, 'yPos': relY, 'url': url};
+  				var comment = {'text': $(this).val(), 'xPos': relX, 'yPos': relY};
   				$.ajax({
   					type: "PUT",
   					data: comment,
-  					url: "http://localhost:8080/api/comments/" + url + "/",
+  					url: "http://localhost:8080/api/comments/?url=" + document.URL,
   					success: function(data) {
   						console.log(data);
   					},
