@@ -19,13 +19,12 @@
             "libs/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js",
             "libs/angular/angular.min.js",
             "libs/lodash/dist/lodash.min.js",
-            "libs/underscore.string/dist/underscore.string.min.js",
-            "js/content.js"],
+            "libs/underscore.string/dist/underscore.string.min.js"],
        "css": ["libs/bootstrap/dist/css/bootstrap.min.css",
               "libs/font-awesome/css/font-awesome.min.css"]
     }
   ],
-  "permissions": ["http://*/*", "tabs", "https://*/*", "activeTab"],
+  "permissions": ["activeTab"],
   "background": {
     "scripts": ["js/background.js"],
     "persistent": true

@@ -1,10 +1,13 @@
 $(document).ready(function() {
-	console.log("hi");
-	alert($("body").css("background-color"));
-	$(document).onclick = function(e)
-	{
-    var x = e.pageX;
-    var y = e.pageY;
-    alert("User clicked at position (" + x + "," + y + ")")
-	};
+	console.log("accessed");
+	$("body").click(function() {
+		var newTextBoxDiv = $(document.createElement('div'))
+	     .attr("id", 'TextBoxDiv');
+ 
+		newTextBoxDiv.after().html('<label>Textbox #' + ' : </label>' +
+	      '<input type="text" name="textbox' + 
+	      '" id="textbox' + '" value="" >');
+ 
+		newTextBoxDiv.appendTo("body");
+	});
 });

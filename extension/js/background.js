@@ -5,10 +5,10 @@
 // Called when the user clicks on the browser action.
 chrome.browserAction.onClicked.addListener(function(tab) {
   // No tabs or host permissions needed!
-  chrome.tabs.executeScript(null, {file: "jquery.js"}, function() {
+  chrome.tabs.executeScript(null, {file: "js/jquery.js"}, function() {
   	chrome.tabs.executeScript(null, {
-  		code: 'document.body.style.backgroundColor="red"'
-    	//file: "content.js"
+  		//code: 'console.log("hi")'
+    	file: "js/content.js"
   	});
   });
 });
