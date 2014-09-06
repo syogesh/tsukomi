@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+var urlParser = require("url");
 
 var mongodb = require("mongodb");
 var ObjectID = require("mongodb").ObjectID;
@@ -20,14 +21,19 @@ var mongoUri = "mongodb://localhost:" + mongodb_port + "/tdb";
 // router setup
 var router = express.Router();
 
-router.route("/comments/:url/:id?")
+router.route("/comments")
 	.put(function(req, res) {
 		// usage: siteurl/comments/url
 		// will create new comment with text and x y position
-		var urlIn = req.params.url;
+		var urlIn = urlParser.parse(req.originalUrl, true).query["url"];
 		var textIn = req.body.text;
 		var xPosIn = req.body.xPos;
 		var yPosIn = req.body.yPos;
+
+		console.log(urlIn);
+		console.log(textIn);
+		console.log(xPosIn);
+		console.log(yPosIn);
 
 		if (urlIn == null || textIn == null
 			|| xPosIn == null || yPosIn == null) {
@@ -38,7 +44,7 @@ router.route("/comments/:url/:id?")
 		var newDocument = {
 			text: textIn,
 			position: [xPosIn, yPosIn],
-			votes: 1,
+			votes: 0,
 			url: urlIn,
 			replies: []
 		};
@@ -54,7 +60,10 @@ router.route("/comments/:url/:id?")
 		// usage: siteurl/comments/url
 		// gets all comments from mongodb
 		// return json of all comments
-		var urlIn = req.params.url;
+		var urlIn = urlParser.parse(req.originalUrl, true).query["url"];
+
+		// console.log(urlParser.parse(req.originalUrl, true).query["url"]);
+
 		mongodb.MongoClient.connect(mongoUri, function(err, db) {
 			db.collection("comments").aggregate([ { $match : { url: urlIn } }, { $sort : { votes: -1 } }, { $limit: 10 } ], function(err, items) {
 				res.json(items);
@@ -64,8 +73,8 @@ router.route("/comments/:url/:id?")
 	.post(function(req, res) {
 		// usage: siteurl/comments/url/id
 		// updates a message with <id> by adding or subtracting a vote
-		var urlIn = req.params.url;
-		var idIn = req.params.id;
+		var urlIn = urlParser.parse(req.originalUrl, true).query["url"];
+		var idIn = req.body.id;
 		var voteIn = req.body.vote;
 
 		if (urlIn == null || idIn == null || voteIn == null) {
@@ -91,7 +100,7 @@ router.route("/comments/:url/:id?")
 		res.send("success");
 	});
 
-router.route("/replies/:url/:commentId/:id?")
+router.route("/replies/:commentId/:id?")
 	.put(function(req, res) {
 		var parentId = req.params.commentId;
 		var text = req.body.text;
@@ -103,7 +112,7 @@ router.route("/replies/:url/:commentId/:id?")
 
 		mongodb.MongoClient.connect(mongoUri, function(err, db) {
 			db.collection('comments').update({ "_id": ObjectID(parentId) },
-											 { $push: { replies: { id: Date.now(), text: text, votes: 1 } } },
+											 { $push: { replies: { id: Date.now(), text: text, votes: 0 } } },
 											 function(err, result) {});
 		});
 
