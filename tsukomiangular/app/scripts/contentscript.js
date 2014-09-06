@@ -1,6 +1,14 @@
 'use strict';
 window.addEventListener("load", function() {
+<<<<<<< HEAD
   var app = angular.module('tsukApp', []);
+=======
+  var app = angular.module('tsukApp', [
+  	'tsukApp.controllers',
+  	'tsukApp.services',
+  	'xeditable',
+    'ngRoute']);
+>>>>>>> d5a59b1a2f552f68b40288cdc5dc05924553ae18
 
   var html = document.querySelector('html');
   html.setAttribute('ng-app', 'tsukApp');
