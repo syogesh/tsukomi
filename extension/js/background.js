@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 // Called when the user clicks on the browser action.
-chrome.tabs.executeScript(null, {file: "js/auto.js"
-});
 
 chrome.browserAction.onClicked.addListener(function(tab) {
   // No tabs or host permissions needed!

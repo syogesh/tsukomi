@@ -7,7 +7,7 @@ $(document).ready(function() {
         contentType: 'application/json',
         type: "GET",
         dataType: "json",
-        url: "http://localhost:8080/api/comments/" + url + "/",
+        url: "http://localhost:8080/api/comments",
         success: function(data) {
         	//var count = 0;
         	for (var i = 0; i < data.length; i++) {
@@ -35,23 +35,23 @@ $(document).ready(function() {
     	var relX = e.pageX - parentOffset.left + wrapper.scrollLeft();
     	var relY = e.pageY - parentOffset.top + wrapper.scrollTop();
     	// add a div here
-    	$(this).append($('<div/>').addClass('placeddiv').css({
+    	$(this).append($('<div/>').attr('id', 'tsuk-' + count).addClass('placeddiv').css({
         	left: relX,
         	top: relY,
     	}));    
-    	var current = $('.placeddiv');
+    	var current = $('#tsuk-' + count);
     	console.log(current);
     	console.log(current[0]);
     	$('.placeddiv').after().html('<form class="tsukform"><input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '">' + 
-    		'<input type="submit" style="display: none;"></form>');
-
+    		'<span id="tsuktxt-' + count + '"></span><input type="submit" style="display: none;"></form>');
+    	$('#tsuktxt' + count).hide();
     	$('input').keypress(function (e) {
   			if (e.which == 13) {
-  				var comment = {'text': $(this).val(), 'xPos': relX, 'yPos': relY, 'url': url};
+  				var comment = {'text': $(this).val(), 'xPos': relX, 'yPos': relY};
   				$.ajax({
   					type: "PUT",
   					data: comment,
-  					url: "http://localhost:8080/api/comments/" + url + "/",
+  					url: "http://localhost:8080/api/comments",
   					success: function(data) {
   						console.log(data);
   					},
@@ -59,8 +59,9 @@ $(document).ready(function() {
     					console.log(e);
   					}
   				});
+  				//$(".placeddiv > form").hide();
+  				//$('#tsuktxt' + count).html($(this).val());
   				//$('#t0').val('save');
-  				//$('#tsuk-' + count).removeClass('placeddiv').addClass('comment');
     			return false;    //<---- Add this line
   			}
 		});

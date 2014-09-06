@@ -7,7 +7,7 @@
         contentType: 'application/json',
         type: "GET",
         dataType: "json",
-        url: "http://localhost:8080/api/comments/" + url + "/",
+        url: "http://localhost:8080/api/comments/",
         success: function(data) {
         	//var count = 0;
         	for (var i = 0; i < data.length; i++) {
