@@ -82,6 +82,9 @@ router.route("/replies/:url/:commentId/:id?")
         res.send("replies put done");
     })
     .get(function(req, res) {
+        var parent_id = req.params.commentId;
+        var reply_id = req.params.id;
+
         mongodb.MongoClient.connect(uri, function(err, db) {
             db.collection('replies').find({ "_id": ObjectID(parent_id) }).toArray(function (err, items) {
                 var replies = items[0]['replies'];
