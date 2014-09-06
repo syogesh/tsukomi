@@ -3,6 +3,7 @@ $(document).ready(function() {
  //    url = url.replace("http://","");
  //    url = url.replace("https://","");
  //    url = "google.com";
+ 	function getAJAX() {
     $.ajax({
         contentType: 'application/json',
         type: "GET",
@@ -25,29 +26,25 @@ $(document).ready(function() {
         	};
         }
     });
+	}
+	getAJAX();
 
 	var count = 0;
 	$("body").click(function(e) {
-		if (current) {
-			console.log(current);
-		}
-		else {
 		// find the position in the current window
 		var wrapper = $(this).parent();
     	var parentOffset = wrapper.offset(); 
     	var relX = e.pageX - parentOffset.left + wrapper.scrollLeft();
     	var relY = e.pageY - parentOffset.top + wrapper.scrollTop();
     	// add a div here
-    	$(this).append($('<div/>').attr('id', 'tsuk-' + count).addClass('placeddiv').css({
+    	$(this).append($('<div/>').addClass('placeddiv').css({
         	left: relX,
         	top: relY,
     	}));    
-    	var current = $('#tsuk-' + count);
+    	var current = $('.placeddiv');
     	console.log(current);
-    	console.log(current[0]);
-    	$('.placeddiv').after().html('<form class="tsukform"><input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '">' + 
-    		'<span id="tsuktxt-' + count + '"></span><input type="submit" style="display: none;"></form>');
-    	$('#tsuktxt' + count).hide();
+    	$('.placeddiv').after().html('<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '" />' + 
+    		'<span id="tsuktxt-' + count + '"></span><input type="submit" style="display: none;">');
     	$('input').keypress(function (e) {
   			if (e.which == 13) {
   				var comment = {'text': $(this).val(), 'xPos': relX, 'yPos': relY};
@@ -64,15 +61,15 @@ $(document).ready(function() {
     					console.log(e);
   					}
   				});
-  				//$(".placeddiv > form").hide();
-  				//$('#tsuktxt' + count).html($(this).val());
+  				current.css('display', 'none');
+  				$('input').css('display', 'none');
+  				getAJAX();
   				//$('#t0').val('save');
     			return false;    //<---- Add this line
   			}
 		});
 		$(this).unbind('click');
 		count = count + 1;
-		}
 	});
 
 	/*$('body').click(function(e) {
