@@ -54,9 +54,11 @@ router.route("/comments/:url/:id?")
 		// return json of all comments
 		var urlIn = req.params.url;
 		console.log(req.params);
-		db.collection("comments").find({ url: urlIn }).toArray(function (err, items) {
 
-			res.json(items);
+		mongodb.MongoClient.connect(mongoUri, function(err, db) {
+			db.collection("comments").find({ url: urlIn }).toArray(function (err, items) {
+				res.json(items);
+			});
 		});
 	})
 	.post(function(req, res) {
