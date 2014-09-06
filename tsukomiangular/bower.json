@@ -1,8 +1,0 @@
-{
-  "name": "tsukomiangular",
-  "version": "0.0.0",
-  "dependencies": {
-    "angular": "~1.2.23"
-  },
-  "devDependencies": {}
-}
