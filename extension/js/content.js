@@ -1,5 +1,21 @@
 $(document).ready(function() {
 	console.log("accessed");
+	var url = $(location).attr('href');
+    url = url.replace("http://","");
+    url = url.replace("https://","");
+
+    url = "google.com";
+    console.log(url);
+    $.ajax({
+        contentType: 'application/json',
+        type: "GET",
+        dataType: "json",
+        url: "http://localhost:8080/api/comments/" + url + "/",
+        success: function(data) {
+            console.log(data);
+        }
+    });
+
 	var count = 0;
 	$("body").click(function(e) {
 		if (current) {
@@ -25,6 +41,18 @@ $(document).ready(function() {
     	$('input').keypress(function (e) {
   			if (e.which == 13) {
   				console.log($(this).val());
+  				var comment = {'text': $(this).val(), 'position': [relX, relY]};
+  				console.log(comment['position']);
+  				$.ajax({
+  					contentType: 'application/json',
+  					type: "PUT",
+  					//dataType: "json",
+  					data: comment,
+  					url: "http://localhost:8080/api/comments/" + url + "/",
+  					success: function(data) {
+  						console.log(data);
+  					}
+  				});
   				$('#t0').val('save');
     			return false;    //<---- Add this line
   			}
