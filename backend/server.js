@@ -21,6 +21,16 @@ var mongoUri = "mongodb://localhost:" + mongodb_port + "/tdb";
 // router setup
 var router = express.Router();
 
+router.use(function(req, res, next) {
+	console.log(req.method, req.url);
+	next();
+});
+
+router.route("/")
+	.get(function(req, res) {
+		res.send("hello world!");
+	});
+
 router.route("/comments")
 	.put(function(req, res) {
 		// usage: siteurl/comments/url

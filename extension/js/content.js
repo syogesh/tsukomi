@@ -1,12 +1,12 @@
 $(document).ready(function() {
-
-    function getAJAX() {
-    $.ajax({
-        contentType: 'application/json',
-        type: "GET",
-        dataType: "json",
-
-        url: "http://localhost:8080/api/comments/?url=" + document.URL,
+	var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
+	// var serverURL = "localhost:8080";
+	function getAJAX() {
+		$.ajax({
+			contentType: 'application/json',
+			type: "GET",
+			dataType: "json",
+			url: "http://" + serverURL + "/api/comments/?url=" + document.URL,
 
         success: function(data) {
           console.log(data);
@@ -58,23 +58,23 @@ $(document).ready(function() {
                     type: "PUT",
                     data: comment,
 
-                    url: "http://localhost:8080/api/comments/?url=" + document.URL,
+					url: "http://" + serverURL + "/api/comments/?url=" + document.URL,
 
-                    success: function(data) {
-                        console.log(data);
-                    },
-                    error: function(e) {
-                        console.log(e);
-                    }
-                });
-                current.css('display', 'none');
-                $('input').css('display', 'none');
-                getAJAX();
-
-                return false;    
-            }
-        });
-        $(this).unbind('click');
-        count = count + 1;
-    });
+					success: function(data) {
+						console.log(data);
+					},
+					error: function(e) {
+						console.log(e);
+					}
+				});
+				current.css('display', 'none');
+				$('input').css('display', 'none');
+				getAJAX();
+				//$('#t0').val('save');
+				return false;    //<---- Add this line
+			}
+		});
+		$(this).unbind('click');
+		count = count + 1;
+	});
 });
