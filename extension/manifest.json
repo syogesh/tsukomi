@@ -19,7 +19,8 @@
             "libs/lodash/dist/lodash.min.js",
             "libs/underscore.string/dist/underscore.string.min.js"],
        "css": ["libs/bootstrap/dist/css/bootstrap.min.css",
-              "libs/font-awesome/css/font-awesome.min.css"]
+              "libs/font-awesome/css/font-awesome.min.css",
+              "css/style.css"]
     }
   ],
   "permissions": ["activeTab"],
