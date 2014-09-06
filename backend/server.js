@@ -2,7 +2,7 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
-var mongoose = require("mongoose");
+var mongodb = require("mongodb");
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -15,9 +15,7 @@ var mongodb_port = 27017;
 
 // mongodb setup
 var uri = "mongodb://localhost:" + mongodb_port + "/tdb";
-var db = mongoose.connect(uri, ["websites", "comments", "replies"]);
-var client = mongodb.MongoClient(uri);
-var websites_coll = client['websites'];
+
 
 // router setup
 var router = express.Router();
@@ -34,11 +32,17 @@ router.route("/comment")
 	.get(function(req, res) {
 		// gets all comments from mongodb
 		// return json of all comments
+		mongodb.MongoClient.connect(uri, function(err, db) {
+			db.collection('websites').find({}).toArray(function (err, items) {
+				res.json(items);
+			});
+		});
 	})
 	.post(function(req, res) {
 		var url = req.body.url;
 		var id = req.body.id;
 		var vote = req.body.vote; // int
+		// save to mongodb
 	});
 
 
