@@ -2,10 +2,11 @@
 window.addEventListener("load", function() {
   var app = angular.module('tsukApp', [
   	'tsukApp.controllers',
+  	'tsukApp.services',
   	'xeditable']);
 
   var html = document.querySelector('html');
-  html.setAttribute('ng-app', '');
+  html.setAttribute('ng-app', 'tsukApp');
   html.setAttribute('ng-csp', '');
 
   document.body.id = 'tsukBody';

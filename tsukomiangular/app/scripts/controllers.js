@@ -1,5 +1,5 @@
-angular.module("tsukApp.controllers", []).controller("postCtrl", function($scope) {
-	$scope.posts = taskService.get();
+angular.module("tsukApp.controllers", []).controller("postCtrl", function($scope, taskService) {
+	$scope.tasks = taskService.get();
 	$scope.newTask = { };
 	
 	$scope.currentPage = 0;
@@ -10,9 +10,10 @@ angular.module("tsukApp.controllers", []).controller("postCtrl", function($scope
 	};
 
 	$scope.addPost = function(m) {
+		console.log("adding post");
 		console.log(m);
 		if (m.length > 0) {
-			$scope.posts.push({
+			$scope.tasks.push({
 				text: m
 			});
 		};	
