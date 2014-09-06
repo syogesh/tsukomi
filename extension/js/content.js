@@ -12,7 +12,16 @@ $(document).ready(function() {
         dataType: "json",
         url: "http://localhost:8080/api/comments/" + url + "/",
         success: function(data) {
-            console.log(data);
+            data.forEach(function(item) {
+            	console.log(item['text']);
+            	console.log(item['position']);
+            	console.log(item['votes']);
+            	$("body").append($('<div/>').addClass('comment').css({
+        			left: item['position'][0],
+        			top: item['position'][1],
+    			})); 
+    			$('.comment').after().html(item['text']);
+            });
         }
     });
 
@@ -40,17 +49,16 @@ $(document).ready(function() {
 
     	$('input').keypress(function (e) {
   			if (e.which == 13) {
-  				console.log($(this).val());
-  				var comment = {'text': $(this).val(), 'position': [relX, relY]};
-  				console.log(comment['position']);
+  				var comment = {'text': $(this).val(), 'xPos': relX, 'yPos': relY, 'url': url};
   				$.ajax({
-  					contentType: 'application/json',
   					type: "PUT",
-  					//dataType: "json",
   					data: comment,
   					url: "http://localhost:8080/api/comments/" + url + "/",
   					success: function(data) {
   						console.log(data);
+  					},
+  					error: function(e) {
+    					console.log(e);
   					}
   				});
   				$('#t0').val('save');
