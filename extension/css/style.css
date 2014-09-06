@@ -8,7 +8,7 @@ body {
     position: absolute;
     z-index: 999;
 }
-.placeddiv{
+.placeddiv {
     background-color: transparent; 
     height: 100px; 
     width: 100px; 
@@ -41,4 +41,8 @@ body {
     border: 1px solid black; 
     float: left; 
     clear: left; 
+}
+
+.downvote {
+	background: url(/Users/kathy/Documents/tsukomi/extension/css/down.png);
 }

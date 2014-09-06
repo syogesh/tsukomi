@@ -10,21 +10,25 @@ $(document).ready(function() {
 
         success: function(data) {
           console.log(data);
-            //var count = 0;
             for (var i = 0; i < data.length; i++) {
-            //data.forEach(function(item) {
-                var id = "#tc" + i;
-                $("body").append($('<div id="tc' + i + '"/>')).css({
+                var id = '#' + data[i]['_id'];
+                $("body").append($('<div id="' + data[i]['_id'] + '"/>')).css({
                     left: data[i]['position'][0],
                     top: data[i]['position'][1]
                 });
                 $(id).after().html('<div class="comment" style="left:' + 
-                    data[i]['position'][0] + 'px; top:' + data[i]['position'][1] + 'px; position:absolute;">' + data[i]['text'] + '</div>');
+                    data[i]['position'][0] + 'px; top:' + data[i]['position'][1] + 'px; position:absolute;">' +
+                    '<a href="javascript:void(0)" class="upvote">▲</a>' +
+            		'<a href="javascript:void(0)" class="downvote">▼</a>' + data[i]['text'] + '</div>');
             };
         }
     });
     }
     getAJAX();
+
+    $(".upvote").click(function() {
+    	console.log('accessed up');
+    });
 
     var count = 0;
     $("body").click(function(e) {
@@ -41,9 +45,7 @@ $(document).ready(function() {
         var current = $('.placeddiv');
         console.log(current);
         $('.placeddiv').after().html('<form class="tsukform">' +
-            '<input type="image" src="css/upvote.png" class="arrow up">' +
-            '<input type="image" src="css/downvote.png" class="arrow down">' +
-            '<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '">' +
+            '<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '" />' +
             '<input type="submit" style="display: none;"></form>');
         /*
         $('.placeddiv').after().html('<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '" />' + 
@@ -68,8 +70,8 @@ $(document).ready(function() {
                 current.css('display', 'none');
                 $('input').css('display', 'none');
                 getAJAX();
-                //$('#t0').val('save');
-                return false;    //<---- Add this line
+
+                return false;    
             }
         });
         $(this).unbind('click');
