@@ -13,6 +13,9 @@ chrome.browserAction.onClicked.addListener(function(tab) {
   chrome.tabs.insertCSS(null, {
   	code: ".placeddiv{background-color: transparent; height: 100px; width: 100px; position: absolute; z-index: 999;}"
   });
+  chrome.tabs.insertCSS(null, {
+  	code: ".comment{background-color: transparent; height: 100px; width: 100px; position: absolute; z-index: 999;}"
+  });
 });
 
 
