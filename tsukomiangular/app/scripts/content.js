@@ -1,8 +1,14 @@
 $(document).ready(function() {
+<<<<<<< HEAD
+    /*var url = $(location).attr('href');
+    url = url.replace("http://","");
+    url = url.replace("https://","");
+=======
     // var url = $(location).attr('href');
     // url = url.replace("http://","");
     // url = url.replace("https://","");
     url = "google.com";
+>>>>>>> d5a59b1a2f552f68b40288cdc5dc05924553ae18
     console.log(url);
     $.ajax({
         contentType: 'application/json',
@@ -12,11 +18,7 @@ $(document).ready(function() {
         success: function(data) {
             console.log(data);
         }
-    });
-	
-    function submitClicked() {
-
-    }
+    });*/
 
 	$("body").click(function(e) {
 
@@ -31,11 +33,17 @@ $(document).ready(function() {
         	top: relY,
     	}));    
 
+<<<<<<< HEAD
+    	$('.placeddiv').after().html('<form role="form" ng-submit="addPost(newPost.text)" class="tsukform">' + 
+            '<input class="form-control" type="text" name="textbox" ng-model="newPost.text" autofocus />' + 
+    		'<input id="add" type="submit" class="btn btn-default form-control" ng-disabled="isEmpty(newPost.text)" /></form>');
+=======
     	$('.placeddiv').after().html('<form role="form" onclick="addPost(newPost.text)" class="tsukform">' + 
             '<input class="tsukomi form-control" type="text" name="textbox" ng-model="newPost.text" autofocus />' + 
     		'<div id="addbtn" class="col-sm-2"><button id="add" type="submit" class="btn btn-default form-control" ng-disabled="isEmpty(newPost.text)">add</button></div>');
+>>>>>>> d5a59b1a2f552f68b40288cdc5dc05924553ae18
         
-        $('.placeddiv').keypress(function (e) {
+        /*$('.placeddiv').keypress(function (e) {
   			if (e.which == 13) {
   				console.log($('input').val());
     			$('#add').submit(function() {
@@ -44,7 +52,7 @@ $(document).ready(function() {
     			console.log('accessing');
     			return false;    //<---- Add this line
   			}
-		});
+		});*/
 		$(this).unbind('click');
 	});
 

@@ -1,7 +1,11 @@
 $(document).ready(function() {
 	console.log("accessed");
+	var count = 0;
 	$("body").click(function(e) {
-
+		if (current) {
+			console.log(current);
+		}
+		else {
 		// find the position in the current window
 		var wrapper = $(this).parent();
     	var parentOffset = wrapper.offset(); 
@@ -12,21 +16,22 @@ $(document).ready(function() {
         	left: relX,
         	top: relY,
     	}));    
-
-    	$('.placeddiv').after().html('<form class="tsukform"><input class="tsukomi" type="text" name="textbox' + '" value="">' + 
+    	var current = $('.placeddiv');
+    	console.log(current);
+    	console.log(current[0]);
+    	$('.placeddiv').after().html('<form class="tsukform"><input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '">' + 
     		'<input type="submit" style="display: none;"></form>');
 
-    	$('.placeddiv').keypress(function (e) {
+    	$('input').keypress(function (e) {
   			if (e.which == 13) {
-  				console.log($('input').val());
-    			$('form').submit(function() {
-    				console.log('submitted');
-    			});
-    			console.log('accessing');
+  				console.log($(this).val());
+  				$('#t0').val('save');
     			return false;    //<---- Add this line
   			}
 		});
 		$(this).unbind('click');
+		count = count + 1;
+		}
 	});
 
 	/*$('body').click(function(e) {
