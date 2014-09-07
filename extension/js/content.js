@@ -8,74 +8,76 @@ $(document).ready(function() {
 			dataType: "json",
 			url: "http://" + serverURL + "/api/comments/?url=" + document.URL,
 
-        success: function(data) {
-          console.log(data);
-            for (var i = 0; i < data.length; i++) {
-                var id = '#' + data[i]['_id'];
-                $("body").append($('<div id="' + data[i]['_id'] + '"/>')).css({
-                    left: data[i]['position'][0],
-                    top: data[i]['position'][1]
-                });
-                $(id).after().html('<div class="comment" style="left:' + 
-                    data[i]['position'][0] + 'px; top:' + data[i]['position'][1] + 'px; position:absolute;">' +
-                    '<a href="javascript:void(0)" class="upvote">▲</a>' +
-            		'<a href="javascript:void(0)" class="downvote">▼</a>' + data[i]['text'] + '</div>');
-            };
-        }
-    });
-    }
-    getAJAX();
+			success: function(data) {
+				// placing each box
+				for (var i = 0; i < data.length; i++) {
+					var id = '#' + data[i]['_id'];
+					$("body").append('<div id="' + data[i]['_id'] + '" class="yodel-111-comment" style="left:' + 
+						data[i]['position'][0] + 'px; top:' + data[i]['position'][1] + 'px;"></div>');
 
-    $(".upvote").click(function() {
-    	console.log('accessed up');
-    });
-
-    var count = 0;
-    $("body").click(function(e) {
-        // find the position in the current window
-        var wrapper = $(this).parent();
-        var parentOffset = wrapper.offset(); 
-        var relX = e.pageX - parentOffset.left + wrapper.scrollLeft();
-        var relY = e.pageY - parentOffset.top + wrapper.scrollTop();
-        // add a div here
-        $(this).append($('<div/>').addClass('placeddiv').css({
-            left: relX,
-            top: relY,
-        }));    
-        var current = $('.placeddiv');
-        console.log(current);
-        $('.placeddiv').after().html('<form class="tsukform">' +
-            '<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '" />' +
-            '<input type="submit" style="display: none;"></form>');
-        $('.placeddiv').css("position", "absolute");
-        /*
-        $('.placeddiv').after().html('<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '" />' + 
-            '<span id="tsuktxt-' + count + '"></span><input type="submit" style="display: none;">');
-        */
-        $('input').keypress(function (e) {
-            if (e.which == 13) {
-                var comment = {'text': $(this).val(), 'xPos': relX, 'yPos': relY};
-                $.ajax({
-                    type: "PUT",
-                    data: comment,
-
-					url: "http://" + serverURL + "/api/comments/?url=" + document.URL,
-
-					success: function(data) {
-						console.log(data);
-					},
-					error: function(e) {
-						console.log(e);
-					}
-				});
-				current.css('display', 'none');
-				$('input').css('display', 'none');
-				getAJAX();
-				//$('#t0').val('save');
-				return false;    //<---- Add this line
+					$(id).after().html('<div>' + data[i]['votes'] + '</div>' + '<div><div class="yodel-111-up-arrow"></div><div class="yodel-111-down-arrow"></div></div>' + '<div>' + data[i]['text'] + '</div>');
+				};
 			}
 		});
-		$(this).unbind('click');
-		count = count + 1;
+	}
+
+	$(".upvote").click(function() {
+		console.log('accessed up');
 	});
+
+
+	$("body").click(function(e) {
+		// find the position in the current window
+		var wrapper = $(this).parent();
+		var parentOffset = wrapper.offset(); 
+		var relX = e.pageX - parentOffset.left + wrapper.scrollLeft();
+		var relY = e.pageY - parentOffset.top + wrapper.scrollTop();
+
+		var id = "yodel-111-add-textarea";
+
+		var addCommentDiv = $('<div id="' + id + '" class="yodel-111-add" style="left:' + 
+		 	relX + 'px; top:' + relY + 'px;"><textarea></textarea><button>Submit</button></div>');
+
+		addCommentDiv.find('button').click(function() {
+			var elem = $("#" + id + " > textarea");
+			console.log(elem.val());
+			var comment = { text: elem.val(), xPos: relX, yPos: relY };
+			$.ajax({
+				type: "PUT",
+				data: comment,
+
+				url: "http://" + serverURL + "/api/comments/?url=" + document.URL,
+
+				success: function(data) {
+					console.log(data);
+					
+					$("#" + id).remove();
+
+					if (data.length == 0) {
+						// you dun messed up
+						return;
+					}
+
+					var newId = '#' + data[0]['_id'];
+					$("body").append('<div id="' + data[0]['_id'] + '" class="yodel-111-comment" style="left:' + 
+						data[0]['position'][0] + 'px; top:' + data[0]['position'][1] + 'px;"></div>');
+
+					$(newId).after().html('<div>' + data[0]['votes'] + '</div>' + '<div><div class="yodel-111-up-arrow"></div><div class="yodel-111-down-arrow"></div></div>' + '<div>' + data[0]['text'] + '</div>');
+
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		});
+
+		$("body").append(addCommentDiv);
+		$("#" + id).find('textarea').focus();
+		
+		$(this).unbind('click');
+	});
+
+	
+	getAJAX();
+
 });

@@ -40,11 +40,6 @@ router.route("/comments")
 		var xPosIn = req.body.xPos;
 		var yPosIn = req.body.yPos;
 
-		console.log(urlIn);
-		console.log(textIn);
-		console.log(xPosIn);
-		console.log(yPosIn);
-
 		if (urlIn == null || textIn == null
 			|| xPosIn == null || yPosIn == null) {
 			res.status(400).send("missing a parameter");
@@ -61,10 +56,11 @@ router.route("/comments")
 
 		// check for failures
 		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection("comments").insert(newDocument, function(err, result) {});
+			db.collection("comments").insert(newDocument, function(err, docInserted) {
+				console.log(docInserted);
+				res.json(docInserted);
+			});
 		});
-
-		res.send("success");
 	})
 	.get(function(req, res) {
 		// usage: siteurl/comments/url
@@ -104,6 +100,7 @@ router.route("/comments")
 					replies: item.replies
 				}
 
+				// TODO: check for write error
 				db.collection('comments').update({ "_id": ObjectID(idIn) }, updateDocument, function(err, result) {});
 			});
 		});
