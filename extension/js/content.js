@@ -19,7 +19,7 @@ $(document).ready(function() {
 					$("body").append('<div id="' + data[i]['_id'] + '" class="yodel-111-comment" style="left:' + 
 						data[i]['position'][0] + 'px; top:' + data[i]['position'][1] + 'px;"></div>');
 
-					$(id).after().html('<div>' + data[i]['votes'] + '</div>' + '<div><div class="yodel-111-up-arrow"></div><div class="yodel-111-down-arrow"></div></div>' + '<div>' + data[i]['text'] + '</div>');
+					$(id).after().html('<div class="yodel-111-num-votes">' + data[i]['votes'] + '</div>' + '<div><div class="yodel-111-up-arrow"></div><div class="yodel-111-down-arrow"></div></div>' + '<div>' + data[i]['text'] + '</div>');
 				};
 			}
 		});
@@ -61,8 +61,7 @@ $(document).ready(function() {
 					$("body").append('<div id="' + data[0]['_id'] + '" class="yodel-111-comment" style="left:' + 
 						data[0]['position'][0] + 'px; top:' + data[0]['position'][1] + 'px;"></div>');
 
-					$(newId).after().html('<div>' + data[0]['votes'] + '</div>' + '<div><div class="yodel-111-up-arrow"></div><div class="yodel-111-down-arrow"></div></div>' + '<div>' + data[0]['text'] + '</div>');
-
+					$(newId).after().html('<div class="yodel-111-num-votes">' + data[0]['votes'] + '</div>' + '<div><div class="yodel-111-up-arrow"></div><div class="yodel-111-down-arrow"></div></div>' + '<div>' + data[0]['text'] + '</div>');
 				},
 				error: function(e) {
 					console.log(e);

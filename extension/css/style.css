@@ -7,43 +7,46 @@ body {
 	z-index: 998;
 	height: auto;
 	width: auto;
-	background: beige;
+	background-color: #F8F8F8;
+	opacity: 0.8;
+	color: black;
+	border: 2px solid #F8F8F8;
 	padding: 10px;
 	border-radius: 10px;
-	-webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
-	-moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
-	box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+	-webkit-box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
+	box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.75);
+	font-size: 20px;
 }
 
 .yodel-111-comment > div {
 	float: left;
 	display: inline-block;
-	margin: auto;
-	top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .yodel-111-up-arrow {
 	width: 0px;
 	height: 0px;
-	border-left: 8px solid transparent;
-	border-right: 8px solid transparent;
-	border-bottom: 8px solid green;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-bottom: 10px solid #59FF9D;
 }
 
 .yodel-111-up-arrow:hover {
-	opacity: 0.8;
+	opacity: 0.5;
 }
 
 .yodel-111-down-arrow {
+	margin-top: 7px;
 	width: 0;
 	height: 0; 
-	border-left: 8px solid transparent;
-	border-right: 8px solid transparent;
-	border-top: 8px solid red;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #E8482F;
 }
 
 .yodel-111-down-arrow:hover {
-	opacity: 0.8;
+	opacity: 0.5;
 }
 
 .yodel-111-comment > div ~ div {
@@ -57,6 +60,11 @@ body {
 	width: 150px;
 }
 
+.yodel-111-num-votes {
+	position: relative;
+	font-size: 15px;
+	top: 4px;
+}
 
 
 
