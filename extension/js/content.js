@@ -4,19 +4,19 @@ $(document).ready(function() {
 	
 	// TODO: clean the document URL
 	var docURL = document.URL;
-	var start = docURL.indexOf("//");
-	var end = docURL.indexOf("?");
-	if (start == -1) {
-		start = -2;
-	}
-	if (end == -1) {
-		end = name.length;
-	}
+	// var start = docURL.indexOf("//");
+	// var end = docURL.indexOf("?");
+	// if (start == -1) {
+	// 	start = -2;
+	// }
+	// if (end == -1) {
+	// 	end = name.length;
+	// }
 
-	docURL = docURL.substring(start + 2, end);
-	if (docURL[docURL.length - 1] == "/") {
-		docURL = docURL.substring(0, docURL.length - 2);
-	}
+	// docURL = docURL.substring(start + 2, end);
+	// if (docURL[docURL.length - 1] == "/") {
+	// 	docURL = docURL.substring(0, docURL.length - 2);
+	// }
 
 	function getAJAX() {
 		$.ajax({
