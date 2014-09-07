@@ -1,12 +1,16 @@
 $(document).ready(function() {
 	//var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
 	var serverURL = "localhost:8080";
+
+	// TODO: clean the document URL
+	var docURL = document.URL;
+
 	function getAJAX() {
 		$.ajax({
 			contentType: 'application/json',
 			type: "GET",
 			dataType: "json",
-			url: "http://" + serverURL + "/api/comments/?url=" + document.URL,
+			url: "http://" + serverURL + "/api/comments/?url=" + docURL,
 
 			success: function(data) {
 				// placing each box
@@ -41,7 +45,7 @@ $(document).ready(function() {
 				type: "PUT",
 				data: comment,
 
-				url: "http://" + serverURL + "/api/comments/?url=" + document.URL,
+				url: "http://" + serverURL + "/api/comments/?url=" + docURL,
 
 				success: function(data) {
 					console.log(data);
@@ -71,35 +75,38 @@ $(document).ready(function() {
 		
 		$(this).unbind('click');
 	});
-
 	
-	// function postAJAX(server_id, vote) {
-	// 	$.ajax({
-	// 		type: "POST",
-	// 		data: { "id": server_id, "vote": vote },
-	// 		url: "http://" + serverURL + "/api/comments/?url=" + docUrl,
+	function postAJAX(commentId, vote) {
+		$.ajax({
+			type: "POST",
+			data: { "id": commentId, "vote": vote },
+			url: "http://" + serverURL + "/api/comments/?url=" + docURL,
 
-	// 		success: function(data) {
-	// 			console.log(data);
-	// 		},
-	// 		error: function(e) {
-	// 			console.log(e);
-	// 		}
-	// 	});
-	// }
+			success: function(data) {
+				console.log(data);
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
 
-	// $("body").on("click", ".yodel-111-up-arrow", function() {
-	// 	var server_id = $(this).parent("div").parent().attr('id');
-	// 	postAJAX(server_id, 1);
-	// 	return false;
-	// });
+	$("body").on("click", ".yodel-111-up-arrow", function() {
+		var commentId = $(this).parent().parent().attr('id');
+		postAJAX(commentId, 1);
 
-	// $("body").on("click", ".yodel-111-down-arrow", function() {
-	// 	var server_id = $(this).parent("div").parent().attr('id');
-	// 	postAJAX(server_id, -1);
-	// 	return false;
-	// });
+		var newVote = parseInt($("#" + commentId).children(":first").text()) + 1;
+		$("#" + commentId).children(":first").html(newVote);
+		return false;
+	});
+
+	$("body").on("click", ".yodel-111-down-arrow", function() {
+		var commentId = $(this).parent().parent().attr('id');
+		postAJAX(commentId, -1);
+		var newVote = parseInt($("#" + commentId).children(":first").text()) - 1;
+		$("#" + commentId).children(":first").html(newVote);
+		return false;
+	});
 
 	getAJAX();
-
 });
