@@ -1,9 +1,22 @@
 $(document).ready(function() {
-	//var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
-	var serverURL = "localhost:8080";
+	var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
+	// var serverURL = "localhost:8080";
 
 	// TODO: clean the document URL
 	var docURL = document.URL;
+	var start = docURL.indexOf("//");
+	var end = docURL.indexOf("?");
+	if (start == -1) {
+		start = -2;
+	}
+	if (end == -1) {
+		end = name.length;
+	}
+
+	docURL = docURL.substring(start + 2, end);
+	if (docURL[docURL.length - 1] == "/") {
+		docURL = docURL.substring(0, docURL.length - 2);
+	}
 
 	function getAJAX() {
 		$.ajax({
