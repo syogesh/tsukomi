@@ -21,11 +21,6 @@ $(document).ready(function() {
 		});
 	}
 
-	$(".upvote").click(function() {
-		console.log('accessed up');
-	});
-
-
 	$("body").click(function(e) {
 		// find the position in the current window
 		var wrapper = $(this).parent();
@@ -36,7 +31,7 @@ $(document).ready(function() {
 		var id = "yodel-111-add-textarea";
 
 		var addCommentDiv = $('<div id="' + id + '" class="yodel-111-add" style="left:' + 
-		 	relX + 'px; top:' + relY + 'px;"><textarea></textarea><button>Submit</button></div>');
+			relX + 'px; top:' + relY + 'px;"><textarea></textarea><button>Submit</button></div>');
 
 		addCommentDiv.find('button').click(function() {
 			var elem = $("#" + id + " > textarea");
@@ -78,6 +73,33 @@ $(document).ready(function() {
 	});
 
 	
+	// function postAJAX(server_id, vote) {
+	// 	$.ajax({
+	// 		type: "POST",
+	// 		data: { "id": server_id, "vote": vote },
+	// 		url: "http://" + serverURL + "/api/comments/?url=" + docUrl,
+
+	// 		success: function(data) {
+	// 			console.log(data);
+	// 		},
+	// 		error: function(e) {
+	// 			console.log(e);
+	// 		}
+	// 	});
+	// }
+
+	// $("body").on("click", ".yodel-111-up-arrow", function() {
+	// 	var server_id = $(this).parent("div").parent().attr('id');
+	// 	postAJAX(server_id, 1);
+	// 	return false;
+	// });
+
+	// $("body").on("click", ".yodel-111-down-arrow", function() {
+	// 	var server_id = $(this).parent("div").parent().attr('id');
+	// 	postAJAX(server_id, -1);
+	// 	return false;
+	// });
+
 	getAJAX();
 
 });

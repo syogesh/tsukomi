@@ -22,14 +22,14 @@ var mongoUri = "mongodb://localhost:" + mongodb_port + "/tdb";
 var router = express.Router();
 
 router.use(function(req, res, next) {
-	console.log(req.method, req.url);
-	next();
+    console.log(req.method, req.url);
+    next();
 });
 
 router.route("/")
-	.get(function(req, res) {
-		res.send("hello world!");
-	});
+    .get(function(req, res) {
+        res.send("hello world!");
+    });
 
 router.route("/comments")
 	.put(function(req, res) {
@@ -107,72 +107,73 @@ router.route("/comments")
 		res.send("success");
 	});
 
+
 router.route("/replies/:commentId/:id?")
-	.put(function(req, res) {
-		var parentId = req.params.commentId;
-		var text = req.body.text;
+    .put(function(req, res) {
+        var parentId = req.params.commentId;
+        var text = req.body.text;
 
-		if (parentId == null || text == null) {
-			res.status(400).send("missing a parameter");
-			return;
-		}
+        if (parentId == null || text == null) {
+            res.status(400).send("missing a parameter");
+            return;
+        }
 
-		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection('comments').update({ "_id": ObjectID(parentId) },
-											 { $push: { replies: { id: Date.now(), text: text, votes: 0 } } },
-											 function(err, result) {});
-		});
+        mongodb.MongoClient.connect(mongoUri, function(err, db) {
+            db.collection('comments').update({ "_id": ObjectID(parentId) },
+                                             { $push: { replies: { id: Date.now(), text: text, votes: 0 } } },
+                                             function(err, result) {});
+        });
 
-		res.send("success");
-	})
-	.get(function(req, res) {
-		var parentId = req.params.commentId;
-		var replyId = req.params.id;
+        res.send("success");
+    })
+    .get(function(req, res) {
+        var parentId = req.params.commentId;
+        var replyId = req.params.id;
 
-		if (parentId == null || replyId == null) {
-			res.status(400).send("missing a parameter");
-			return;
-		}
+        if (parentId == null || replyId == null) {
+            res.status(400).send("missing a parameter");
+            return;
+        }
 
-		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection('comments').find({ "_id": ObjectID(parentId) }).toArray(function (err, items) {
-				var replies = items[0]['replies'];
-				res.send(replies);
-			});
-		});
-	})
-	.post(function(req, res) {
-		var parentId = req.params.commentId;
-		var replyId = req.params.id;
-		var voteIn = req.body.voteIn;
+        mongodb.MongoClient.connect(mongoUri, function(err, db) {
+            db.collection('comments').find({ "_id": ObjectID(parentId) }).toArray(function (err, items) {
+                var replies = items[0]['replies'];
+                res.send(replies);
+            });
+        });
+    })
+    .post(function(req, res) {
+        var parentId = req.params.commentId;
+        var replyId = req.params.id;
+        var voteIn = req.body.voteIn;
 
-		if (parentId == null || replyId == null || voteIn == null) {
-			res.status(400).send("missing a parameter");
-			return;
-		}
+        if (parentId == null || replyId == null || voteIn == null) {
+            res.status(400).send("missing a parameter");
+            return;
+        }
 
-		mongodb.MongoClient.connect(mongoUri, function(err, db) {
-			db.collection("comments").find({ "_id": ObjectID(parentId) }).toArray(function(err, items) {
-				var item = items[0];
-				for (var i = 0; i < item["replies"].length; ++i) {
-					if (item['replies'][i]['id'] == replyId) {
-						item['replies'][i]['votes'] = parseInt(item['replies'][i]['votes']) + parseInt(voteIn);
-						var updateDocument = {
-							text: item.text,
-							position: item.position,
-							votes: item.votes,
-							url: item.url,
-							replies: item.replies
-						}
-						break;
-					}
-				}
-				db.collection('comments').update({ "_id": ObjectID(parentId) }, updateDocument, function(err, result) {});
-			});
-		});
+        mongodb.MongoClient.connect(mongoUri, function(err, db) {
+            db.collection("comments").find({ "_id": ObjectID(parentId) }).toArray(function(err, items) {
+                var item = items[0];
+                for (var i = 0; i < item["replies"].length; ++i) {
+                    if (item['replies'][i]['id'] == replyId) {
+                        item['replies'][i]['votes'] = parseInt(item['replies'][i]['votes']) + parseInt(voteIn);
+                        var updateDocument = {
+                            text: item.text,
+                            position: item.position,
+                            votes: item.votes,
+                            url: item.url,
+                            replies: item.replies
+                        }
+                        break;
+                    }
+                }
+                db.collection('comments').update({ "_id": ObjectID(parentId) }, updateDocument, function(err, result) {});
+            });
+        });
 
-		res.send("success");
-	});
+        res.send("success");
+    });
 
 // all of our routes will be prefixed with /api
 app.use("/api", router);

@@ -30,12 +30,20 @@ body {
 	border-bottom: 8px solid green;
 }
 
+.yodel-111-up-arrow:hover {
+	opacity: 0.8;
+}
+
 .yodel-111-down-arrow {
 	width: 0;
 	height: 0; 
 	border-left: 8px solid transparent;
 	border-right: 8px solid transparent;
 	border-top: 8px solid red;
+}
+
+.yodel-111-down-arrow:hover {
+	opacity: 0.8;
 }
 
 .yodel-111-comment > div ~ div {
