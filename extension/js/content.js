@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	//var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
-	var serverURL = "localhost:8080";
+	var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
+//	var serverURL = "localhost:8080";
 
 	// TODO: clean the document URL
 	var docURL = document.URL;
