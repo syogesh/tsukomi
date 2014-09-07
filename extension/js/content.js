@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
-	// var serverURL = "localhost:8080";
+	//var serverURL = "ec2-54-68-38-168.us-west-2.compute.amazonaws.com:8080";
+	var serverURL = "localhost:8080";
 	function getAJAX() {
 		$.ajax({
 			contentType: 'application/json',
@@ -47,6 +47,7 @@ $(document).ready(function() {
         $('.placeddiv').after().html('<form class="tsukform">' +
             '<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '" />' +
             '<input type="submit" style="display: none;"></form>');
+        $('.placeddiv').css("position", "absolute");
         /*
         $('.placeddiv').after().html('<input class="tsukomi" type="text" name="textbox' + '" value="" id="t' + count + '" />' + 
             '<span id="tsuktxt-' + count + '"></span><input type="submit" style="display: none;">');

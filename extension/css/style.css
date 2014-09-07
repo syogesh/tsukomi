@@ -1,18 +1,13 @@
 body {
 	background-color: transparent;
 }
-.placeddiv {
-    background-color: transparent;
-    width: 40px;
-    height: 40px;
-    position: absolute;
-    z-index: 999;
-}
+
 .placeddiv {
     background-color: transparent; 
     height: 100px; 
     width: 100px; 
-    position: absolute; z-index: 999;
+    position: absolute; 
+    z-index: 999;
 }
 
 .tsukform {
@@ -44,5 +39,5 @@ body {
 }
 
 .downvote {
-	background: url(/Users/kathy/Documents/tsukomi/extension/css/down.png);
+
 }
